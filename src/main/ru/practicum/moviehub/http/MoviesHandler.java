@@ -90,7 +90,8 @@ public class MoviesHandler extends BaseHttpHandler {
         String contentType = ex.getRequestHeaders().getFirst("Content-Type");
         if (contentType == null || !contentType.contains("application/json")) {
             sendJson(ex, 415,
-                    gson.toJson(new ErrorResponse("Неподдерживаемый тип", null)));
+                    gson.toJson(new ErrorResponse("Неподдерживаемый тип контента. Требуется application/json",
+                            null)));
             return;
         }
 
