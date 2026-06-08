@@ -53,7 +53,7 @@ class MoviesApiTest {
     }
 
     @Test
-    void postMovie_withValidData_returnsCreated() throws Exception {
+    void postValidMovieReturnsCreated() throws Exception {
         Movie movie = new Movie("Интерстеллар", 2014);
         String json = gson.toJson(movie);
 
@@ -74,7 +74,7 @@ class MoviesApiTest {
     }
 
     @Test
-    void getMovies_whenNotEmpty_returnsAllMovies() throws Exception {
+    void getMoviesReturnsAll() throws Exception {
         // Добавляем фильмы
         store.add(new Movie("Матрица", 1999));
         store.add(new Movie("Начало", 2010));
@@ -97,7 +97,7 @@ class MoviesApiTest {
     }
 
     @Test
-    void getMoviesByYear_returnsFilteredList() throws Exception {
+    void getMoviesByYearReturnsFiltered() throws Exception {
         store.add(new Movie("Годзилла", 1954));
         store.add(new Movie("Кинг-Конг", 1933));
 
@@ -120,7 +120,7 @@ class MoviesApiTest {
     }
 
     @Test
-    void deleteMovie_whenExists_returnsNoContent() throws Exception {
+    void deleteExistingMovieReturnsNoContent() throws Exception {
         Movie saved = store.add(new Movie("Удали меня", 2020));
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -136,7 +136,7 @@ class MoviesApiTest {
     }
 
     @Test
-    void getMovieById_whenNotExists_returnsNotFound() throws Exception {
+    void getNonexistentMovieReturnsNotFound() throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/movies/999"))
                 .GET()
@@ -152,7 +152,7 @@ class MoviesApiTest {
     }
 
     @Test
-    void postMovie_withEmptyTitle_returnsUnprocessableEntity() throws Exception {
+    void postEmptyTitleReturnsUnprocessable() throws Exception {
         Movie movie = new Movie("", 2020);
         String json = gson.toJson(movie);
 
@@ -172,7 +172,7 @@ class MoviesApiTest {
     }
 
     @Test
-    void postMovie_withUnsupportedContentType_returnsUnsupportedMediaType() throws Exception {
+    void postUnsupportedContentTypeReturnsUnsupported() throws Exception {
         String json = "{\"title\": \"Тест\", \"year\": 2020}";
 
         HttpRequest request = HttpRequest.newBuilder()

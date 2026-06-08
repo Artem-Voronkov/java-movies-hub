@@ -16,22 +16,21 @@ public class MoviesServer {
         this.store = store;
         this.port = port;
         try {
-            // Создаём сервер на указанном порту
             server = HttpServer.create(new InetSocketAddress(port), 0);
 
-            // Добавляем контекст для /movies и передаём хранилище в хендлер
             server.createContext("/movies", new MoviesHandler(store));
 
             server.setExecutor(null);
 
         } catch (IOException e) {
-            throw new RuntimeException("Не удалось создать HTTP‑сервер на порту " + port, e);
+            throw new RuntimeException(String.format(
+                    "Не удалось создать HTTP‑сервер на порту %d", port), e);
         }
     }
 
     public void start() {
         server.start();
-        System.out.println("Сервер запущен на порту " + port);
+        System.out.printf("Сервер запущен на порту %d%n", port);
     }
 
     public void stop(int delay) {
